@@ -37,9 +37,9 @@ public class ItemController {
     }
 
     @PutMapping(value = "/item/{id}")
-    public void putItem(@PathVariable("id") Integer id,@Valid @RequestBody Item item) {
+    public Item putItem(@PathVariable("id") Integer id,@Valid @RequestBody Item item) {
         logger.info(item.toString());
-        itemService.updateItem(id, item);
+        return itemService.updateItem(id, item);
     }
 
     @DeleteMapping(value = "/item/{id}")

@@ -19,9 +19,9 @@ public class ItemService {
         return itemDao.getItem(itemId);
     }
 
-    public void updateItem(Integer itemId, Item item) {
+    public Item updateItem(Integer itemId, Item item) {
         item.setId(itemId);
-        itemDao.updateItem(item);
+        return itemDao.updateItem(item);
     }
 
     public void removeItem(Integer itemId) {

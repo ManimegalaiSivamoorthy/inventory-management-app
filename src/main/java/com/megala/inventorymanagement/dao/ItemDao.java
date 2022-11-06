@@ -14,8 +14,8 @@ public class ItemDao {
         return itemRepository.addItem(item);
     }
 
-    public void updateItem(Item item) {
-        itemRepository.updateItem(item.getId(), item);
+    public Item updateItem(Item item) {
+        return itemRepository.updateItem(item.getId(), item);
     }
 
     public Item getItem(Integer itemId) {
