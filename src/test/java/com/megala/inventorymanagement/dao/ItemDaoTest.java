@@ -6,6 +6,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import static com.megala.inventorymanagement.util.TestHelper.createTestItem;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -74,15 +75,5 @@ class ItemDaoTest {
         itemDao.deleteItem(itemId);
 
         verify(itemRepository).deleteItem(itemId);
-    }
-
-    Item createTestItem() {
-        Item item = new Item();
-        item.setId(1);
-        item.setDescription("pencil");
-        item.setBrand("HB");
-        item.setCost(0.3);
-        item.setPackageQuantity(12);
-        return item;
     }
 }

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import static com.megala.inventorymanagement.util.TestHelper.createTestItem;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
@@ -96,15 +97,5 @@ class ItemControllerTest {
 
         itemController.deleteItem(6);
         verify(itemService).removeItem(6);
-    }
-
-    Item createTestItem() {
-        Item item = new Item();
-        item.setId(1);
-        item.setDescription("pencil");
-        item.setBrand("HB");
-        item.setCost(0.3);
-        item.setPackageQuantity(12);
-        return item;
     }
 }
