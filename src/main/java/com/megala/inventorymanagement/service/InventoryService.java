@@ -1,6 +1,7 @@
 package com.megala.inventorymanagement.service;
 
 import com.megala.inventorymanagement.dao.InventoryDao;
+import com.megala.inventorymanagement.exception.InventoryNotFoundException;
 import com.megala.inventorymanagement.model.Inventory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +37,11 @@ public class InventoryService {
     }
 
     public Inventory incrementOnOrderInventory(Integer itemId) {
+        logger.info("Starting to update Inventory for item {}", itemId);
         Inventory inventory = inventoryDao.getInventory(itemId);
+        if (inventory == null) {
+            throw new InventoryNotFoundException();
+        }
         inventory.setOnOrder(inventory.getOnOrder() + 1);
         return inventoryDao.updateInventory(itemId, inventory);
     }
