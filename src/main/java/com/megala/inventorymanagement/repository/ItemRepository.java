@@ -26,9 +26,10 @@ public class ItemRepository {
         return findByItemId(id);
     }
 
-    public void updateItem(Integer itemId, Item item) {
+    public Item updateItem(Integer itemId, Item item) {
         item.setId(itemId);
         itemDatabase.put(itemId, item);
+        return itemDatabase.get(itemId);
     }
 
     public void deleteItem(Integer itemId) {
