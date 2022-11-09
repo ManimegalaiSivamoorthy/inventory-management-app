@@ -11,6 +11,11 @@ public class ItemService {
     @Autowired
     ItemDao itemDao;
 
+    /***
+     * calls Dao method to create item
+     * @param item
+     * @return item object after the item is created
+     */
     public Item createItem(Item item) {
         return itemDao.createItem(item);
     }
