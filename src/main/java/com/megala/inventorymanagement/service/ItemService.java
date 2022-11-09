@@ -20,15 +20,30 @@ public class ItemService {
         return itemDao.createItem(item);
     }
 
+    /***
+     * calls Dao method to get an item
+     * @param itemId
+     * @return item object for the given item id
+     */
     public Item getItem(Integer itemId) {
         return itemDao.getItem(itemId);
     }
 
-    public void updateItem(Integer itemId, Item item) {
+    /***
+     * calls DAo method to update an item
+     * @param itemId
+     * @param item
+     * @return item object after the item is updated
+     */
+    public Item updateItem(Integer itemId, Item item) {
         item.setId(itemId);
-        itemDao.updateItem(item);
+        return itemDao.updateItem(item);
     }
 
+    /***
+     * calls dao method to delete an item
+     * @param itemId
+     */
     public void removeItem(Integer itemId) {
         itemDao.deleteItem(itemId);
     }
