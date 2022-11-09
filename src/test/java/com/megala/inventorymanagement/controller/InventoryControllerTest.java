@@ -72,7 +72,7 @@ class InventoryControllerTest {
     }
 
     @Test
-    void updateOnHandInventoryMethodMustOnHandInventoryForGivenItemId() {
+    void updateOnHandInventoryMethodMustUpdateOnHandInventoryForGivenItemId() {
         Integer itemId = 3;
 
         Inventory mockedInventory = createTestInventory();
@@ -89,18 +89,64 @@ class InventoryControllerTest {
     }
 
     @Test
-    void updateOnArrivalInventory() {
+    void updateOnArrivalInventoryMethodMustUpdateOnArrivalInventoryForGivenItemId() {
+        Integer itemId = 3;
+
+        Inventory mockedInventory = createTestInventory();
+        mockedInventory.setItemId(3);
+        mockedInventory.setOnArrival(10);
+
+        when(inventoryService.incrementOnArrivalInventory(itemId)).thenReturn(mockedInventory);
+
+        Inventory updatedOnArrivalInventory = inventoryController.updateOnArrivalInventory(itemId);
+
+        assertEquals(mockedInventory, updatedOnArrivalInventory);
+
+        verify(inventoryService).incrementOnArrivalInventory(itemId);
     }
 
     @Test
-    void updateOnOrderInventory() {
+    void updateOnOrderInventoryMethodMustUpdateOnOrderInventoryForGivenItemId() {
+        Integer itemId = 3;
+
+        Inventory mockedInventory = createTestInventory();
+        mockedInventory.setItemId(3);
+        mockedInventory.setOnArrival(10);
+
+        when(inventoryService.incrementOnOrderInventory(itemId)).thenReturn(mockedInventory);
+
+        Inventory updatedOnOrderInventory = inventoryController.updateOnOrderInventory(itemId);
+
+        assertEquals(mockedInventory, updatedOnOrderInventory);
+
+        verify(inventoryService).incrementOnOrderInventory(itemId);
     }
 
     @Test
-    void updateInventory() {
+    void updateInventoryMethodMustUpdateInventoryForGivenItemIdAndReturnInventory() {
+        Integer itemId = 2;
+        Inventory inventory = createTestInventory();
+        inventory.setItemId(2);
+
+        when(inventoryService.updateInventory(itemId, inventory)).thenReturn(inventory);
+
+        Inventory resultInventory = inventoryController.updateInventory(itemId, inventory);
+
+        assertEquals(inventory, resultInventory);
+
+        verify(inventoryService).updateInventory(itemId, inventory);
     }
 
     @Test
-    void removeInventory() {
+    void removeInventoryMethodMustDeleteInventoryForGivenItemId() {
+        Integer itemId = 2;
+        Inventory inventory = createTestInventory();
+        inventory.setItemId(2);
+
+        when(inventoryService.getInventory(itemId)).thenReturn(inventory);
+
+        inventoryController.removeInventory(itemId);
+
+        verify(inventoryService).removeInventory(itemId);
     }
 }

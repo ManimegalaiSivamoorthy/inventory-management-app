@@ -35,7 +35,7 @@ class ItemDaoTest {
 
         assertEquals(createdItem, resultItem);
 
-        verify(itemRepository).addItem(resultItem);
+        verify(itemRepository).addItem(item);
     }
 
     @Test
