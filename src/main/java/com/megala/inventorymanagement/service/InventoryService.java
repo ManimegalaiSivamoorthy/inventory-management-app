@@ -16,26 +16,52 @@ public class InventoryService {
     @Autowired
     InventoryDao inventoryDao;
 
+    /***
+     * get inventory method calls inventory Dao to get an inventory for the given item id
+     * @param itemId itemId
+     * @return Inventory for the given item id
+     */
     public Inventory getInventory(Integer itemId) {
         return inventoryDao.getInventory(itemId);
     }
 
+    /***
+     * add inventory method calls Dao to add an inventory for the given the item id
+     * @param itemId itemId
+     * @param inventory inventory
+     * @return Inventory after adding inventory for the given id
+     */
     public Inventory addInventory(Integer itemId, Inventory inventory) {
         return inventoryDao.addInventory(itemId, inventory);
     }
 
+    /**
+     * increment on hand inventory calls Dao to increment on hand inventory by 1
+     * @param itemId itemId
+     * @return Inventory after incrementing on hand inventory by 1
+     */
     public Inventory incrementOnHandInventory(Integer itemId) {
         Inventory inventory = inventoryDao.getInventory(itemId);
         inventory.setOnHand(inventory.getOnHand() + 1);
         return inventoryDao.updateInventory(itemId, inventory);
     }
 
+    /**
+     * increment on arrival inventory calls Dao to increment on arrival inventory by 1
+     * @param itemId itemId
+     * @return Inventory after incrementing on arrival inventory by 1
+     */
     public Inventory incrementOnArrivalInventory(Integer itemId) {
         Inventory inventory = inventoryDao.getInventory(itemId);
         inventory.setOnArrival(inventory.getOnArrival() + 1);
         return inventoryDao.updateInventory(itemId, inventory);
     }
 
+    /**
+     * increment on order inventory calls Dao to increment on order inventory by 1
+     * @param itemId itemId
+     * @return Inventory after incrementing on order inventory by 1
+     */
     public Inventory incrementOnOrderInventory(Integer itemId) {
         logger.info("Starting to update Inventory for item {}", itemId);
         Inventory inventory = inventoryDao.getInventory(itemId);
@@ -46,6 +72,12 @@ public class InventoryService {
         return inventoryDao.updateInventory(itemId, inventory);
     }
 
+    /**
+     * update inventory calls Dao to update the inventory for the given item id
+     * @param itemId itemId
+     * @param inventory inventory
+     * @return Inventory after updating
+     */
     public Inventory updateInventory(Integer itemId, Inventory inventory) {
         Inventory currentInventory = inventoryDao.getInventory(itemId);
         if (inventory.getOnHand() != null) {
@@ -66,6 +98,10 @@ public class InventoryService {
         return inventoryDao.updateInventory(itemId, currentInventory);
     }
 
+    /**
+     * remove inventory calls Dao to delete an inventory for the given item id
+     * @param itemId itemId
+     */
     public void removeInventory(Integer itemId) {
         inventoryDao.removeInventory(itemId);
     }

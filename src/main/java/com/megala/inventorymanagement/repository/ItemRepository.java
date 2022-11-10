@@ -48,7 +48,8 @@ public class ItemRepository {
      */
     public Item updateItem(Integer itemId, Item item) {
         item.setId(itemId);
-        return itemDatabase.put(itemId, item);
+        itemDatabase.put(itemId, item);
+        return itemDatabase.get(itemId);
     }
 
     /***
