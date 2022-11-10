@@ -11,11 +11,13 @@ public class ItemDao {
     ItemRepository itemRepository;
 
     public Item createItem(Item item){
-        return itemRepository.addItem(item);
+        itemRepository.addItem(item);
+        return itemRepository.findByItemId(item.getId());
     }
 
     public Item updateItem(Item item) {
-        return itemRepository.updateItem(item.getId(), item);
+        itemRepository.updateItem(item.getId(), item);
+        return itemRepository.findByItemId(item.getId());
     }
 
     public Item getItem(Integer itemId) {

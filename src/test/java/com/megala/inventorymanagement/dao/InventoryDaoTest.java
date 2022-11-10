@@ -45,13 +45,12 @@ class InventoryDaoTest {
         Inventory inventory = createTestInventory();
         inventory.setItemId(2);
 
-        when(inventoryRepository.addInventory(itemId, inventory)).thenReturn(inventory);
-
         Inventory resultInventory = inventoryDao.addInventory(itemId, inventory);
 
         assertEquals(inventory, resultInventory);
 
-        verify(inventoryRepository).addInventory(itemId, inventory);
+        verify(inventoryRepository).addInventory(inventory);
+        verify(inventoryRepository).findInventoryByItemId(itemId);
     }
 
     @Test
@@ -60,13 +59,12 @@ class InventoryDaoTest {
         Inventory inventory = createTestInventory();
         inventory.setItemId(3);
 
-        when(inventoryRepository.updateInventory(itemId, inventory)).thenReturn(inventory);
-
         Inventory resultInventory = inventoryDao.updateInventory(itemId, inventory);
 
         assertEquals(inventory, resultInventory);
 
-        verify(inventoryRepository).updateInventory(itemId, inventory);
+        verify(inventoryRepository).updateInventory(inventory);
+        verify(inventoryRepository).findInventoryByItemId(itemId);
     }
 
     @Test
