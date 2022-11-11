@@ -1,7 +1,7 @@
 package com.megala.inventorymanagement.service;
 
 import com.megala.inventorymanagement.dao.InventoryDao;
-import com.megala.inventorymanagement.exception.ResourceNotFoundException;
+import com.megala.inventorymanagement.exception.NotFoundException;
 import com.megala.inventorymanagement.model.Inventory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +42,9 @@ public class InventoryService {
      */
     public Inventory incrementOnHandInventory(Integer itemId) {
         Inventory inventory = inventoryDao.getInventory(itemId);
+        if (inventory == null) {
+            throw new NotFoundException();
+        }
         inventory.setOnHand(inventory.getOnHand() + 1);
         return inventoryDao.updateInventory(itemId, inventory);
     }
@@ -53,6 +56,9 @@ public class InventoryService {
      */
     public Inventory incrementOnArrivalInventory(Integer itemId) {
         Inventory inventory = inventoryDao.getInventory(itemId);
+        if (inventory == null) {
+            throw new NotFoundException();
+        }
         inventory.setOnArrival(inventory.getOnArrival() + 1);
         return inventoryDao.updateInventory(itemId, inventory);
     }
@@ -66,7 +72,7 @@ public class InventoryService {
         logger.info("Starting to update Inventory for item {}", itemId);
         Inventory inventory = inventoryDao.getInventory(itemId);
         if (inventory == null) {
-            throw new ResourceNotFoundException();
+            throw new NotFoundException();
         }
         inventory.setOnOrder(inventory.getOnOrder() + 1);
         return inventoryDao.updateInventory(itemId, inventory);
@@ -80,6 +86,9 @@ public class InventoryService {
      */
     public Inventory updateInventory(Integer itemId, Inventory inventory) {
         Inventory currentInventory = inventoryDao.getInventory(itemId);
+        if (currentInventory == null) {
+            throw new NotFoundException();
+        }
         if (inventory.getOnHand() != null) {
             currentInventory.setOnHand(inventory.getOnHand());
         } else {
