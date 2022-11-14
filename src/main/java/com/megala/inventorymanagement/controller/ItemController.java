@@ -1,16 +1,16 @@
 package com.megala.inventorymanagement.controller;
 
+import ch.qos.logback.core.joran.conditional.IfAction;
+import com.megala.inventorymanagement.exception.ResourceNotFound;
 import com.megala.inventorymanagement.model.Item;
 import com.megala.inventorymanagement.service.ItemService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import javax.validation.Valid;
 
 @RestController
@@ -44,7 +44,11 @@ public class ItemController {
 
     @DeleteMapping(value = "/item/{id}")
     public void deleteItem(@PathVariable("id") Integer id) {
-        logger.info("Deleting item with id "+ id + " having data " + itemService.getItem(id).toString());
+        Item item = itemService.getItem(id);
+        if (item == null) {
+            throw new ResourceNotFound("Item is not available to delete.");
+        }
+        logger.info("Deleting item with id "+ id + " having data " + item.toString());
         itemService.removeItem(id);
     }
 }
