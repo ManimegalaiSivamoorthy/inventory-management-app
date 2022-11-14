@@ -15,11 +15,15 @@ public class InventoryDao {
     }
 
     public Inventory addInventory(Integer itemId, Inventory inventory) {
-        return inventoryRepository.addInventory(itemId, inventory);
+        inventory.setItemId(itemId);
+        inventoryRepository.addInventory(inventory);
+        return inventoryRepository.findInventoryByItemId(itemId);
     }
 
     public Inventory updateInventory(Integer itemId, Inventory inventory) {
-        return inventoryRepository.updateInventory(itemId, inventory);
+        inventory.setItemId(itemId);
+        inventoryRepository.updateInventory(inventory);
+        return inventoryRepository.findInventoryByItemId(itemId);
     }
 
     public void removeInventory(Integer itemId) {

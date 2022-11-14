@@ -45,13 +45,17 @@ class InventoryDaoTest {
         Inventory inventory = createTestInventory();
         inventory.setItemId(2);
 
-        when(inventoryRepository.addInventory(itemId, inventory)).thenReturn(inventory);
+        Inventory mockedInventory = createTestInventory();
+        mockedInventory.setItemId(itemId);
+
+        when(inventoryRepository.findInventoryByItemId(itemId)).thenReturn(mockedInventory);
 
         Inventory resultInventory = inventoryDao.addInventory(itemId, inventory);
 
-        assertEquals(inventory, resultInventory);
+        assertEquals(mockedInventory, resultInventory);
 
-        verify(inventoryRepository).addInventory(itemId, inventory);
+        verify(inventoryRepository).addInventory(inventory);
+        verify(inventoryRepository).findInventoryByItemId(itemId);
     }
 
     @Test
@@ -59,14 +63,17 @@ class InventoryDaoTest {
         Integer itemId = 3;
         Inventory inventory = createTestInventory();
         inventory.setItemId(3);
+        Inventory mockedInventory = createTestInventory();
+        mockedInventory.setItemId(itemId);
 
-        when(inventoryRepository.updateInventory(itemId, inventory)).thenReturn(inventory);
+        when(inventoryRepository.findInventoryByItemId(itemId)).thenReturn(mockedInventory);
 
         Inventory resultInventory = inventoryDao.updateInventory(itemId, inventory);
 
-        assertEquals(inventory, resultInventory);
+        assertEquals(mockedInventory, resultInventory);
 
-        verify(inventoryRepository).updateInventory(itemId, inventory);
+        verify(inventoryRepository).updateInventory(inventory);
+        verify(inventoryRepository).findInventoryByItemId(itemId);
     }
 
     @Test

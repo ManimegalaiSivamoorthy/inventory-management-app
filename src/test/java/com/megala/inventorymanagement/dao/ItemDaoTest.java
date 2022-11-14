@@ -29,28 +29,30 @@ class ItemDaoTest {
         Item item = createTestItem();
         Item createdItem = createTestItem();
 
-        when(itemRepository.addItem(item)).thenReturn(createdItem);
+        when(itemRepository.findByItemId(item.getId())).thenReturn(createdItem);
 
         Item resultItem = itemDao.createItem(item);
 
         assertEquals(createdItem, resultItem);
 
         verify(itemRepository).addItem(item);
+        verify(itemRepository).findByItemId(item.getId());
     }
 
     @Test
     void updateItem() {
+        Integer itemId = 2;
         Item item = createTestItem();
-        Integer itemId = item.getId();
+        item.setId(2);
         Item newUpdatedItem = createTestItem();
 
-        when(itemRepository.updateItem(itemId, item)).thenReturn(newUpdatedItem);
-
+        when(itemRepository.findByItemId(itemId)).thenReturn(newUpdatedItem);
         Item resultItem = itemDao.updateItem(item);
 
         assertEquals(newUpdatedItem, resultItem);
 
         verify(itemRepository).updateItem(itemId, item);
+        verify(itemRepository).findByItemId(itemId);
     }
 
     @Test
