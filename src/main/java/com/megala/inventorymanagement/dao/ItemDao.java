@@ -16,7 +16,8 @@ public class ItemDao {
      * @return item object after creating an item
      */
     public Item createItem(Item item){
-        return itemRepository.addItem(item);
+        itemRepository.addItem(item);
+        return itemRepository.findByItemId(item.getId());
     }
 
     /***
@@ -34,7 +35,8 @@ public class ItemDao {
      * @return item object after updating an item for the given item id
      */
     public Item updateItem(Item item) {
-        return itemRepository.updateItem(item.getId(), item);
+        itemRepository.updateItem(item.getId(), item);
+        return itemRepository.findByItemId(item.getId());
     }
 
     /***

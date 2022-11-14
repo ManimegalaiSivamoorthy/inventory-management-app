@@ -1,29 +1,25 @@
 package com.megala.inventorymanagement.repository;
 
 import com.megala.inventorymanagement.model.Inventory;
-import org.springframework.stereotype.Component;
-import java.util.HashMap;
+import org.apache.ibatis.annotations.*;
 
-@Component
-public class InventoryRepository {
-    HashMap<Integer, Inventory> inventoryDatabase = new HashMap<>();
+@Mapper
+public interface InventoryRepository {
 
-    public Inventory findInventoryByItemId(Integer itemId) {
-        return inventoryDatabase.get(itemId);
-    }
+    @Select("select item_id as itemId, " +
+            "  on_hand as onHand, " +
+            "  on_arrival as onArrival, " +
+            "  on_order as onOrder " +
+            "from inventory " +
+            "where item_id = #{itemId}")
+    Inventory findInventoryByItemId(Integer itemId);
 
-    public Inventory addInventory(Integer itemId, Inventory inventory) {
-        inventory.setItemId(itemId);
-        inventoryDatabase.put(itemId, inventory);
-        return inventoryDatabase.get(itemId);
-    }
+    @Insert("Insert into inventory (item_id, on_hand, on_arrival, on_order) values (#{itemId} , #{onHand} , #{onArrival} , #{onOrder})")
+    void addInventory(Inventory inventory);
 
-    public Inventory updateInventory(Integer itemId,Inventory inventory) {
-        return inventoryDatabase.put(itemId, inventory);
-    }
+    @Update("update inventory set item_id = #{itemId}, on_hand = #{onHand}, on_arrival = #{onArrival}, on_order = #{onOrder} where item_id = #{itemId}")
+    void updateInventory(Inventory inventory);
 
-
-    public void deleteInventory(Integer itemId) {
-        inventoryDatabase.remove(itemId);
-    }
+    @Delete("delete from inventory where item_id = #{itemId}")
+    void deleteInventory(Integer itemId);
 }
