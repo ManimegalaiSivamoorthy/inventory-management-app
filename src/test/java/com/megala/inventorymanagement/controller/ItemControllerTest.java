@@ -28,7 +28,6 @@ class ItemControllerTest {
 
     @Test
     void createItemMethodMustCreateItemAndReturnTheCreatedItem() {
-        //setup
         Item item = createTestItem();
         item.setId(null);
 
@@ -37,10 +36,8 @@ class ItemControllerTest {
 
         when(itemService.createItem(item)).thenReturn(itemMockedResponse);
 
-        //Test
         Item result = itemController.createItem(item);
 
-        //Verification
         assertNotNull(result.getId());
         assertEquals(5, result.getId());
         assertEquals(item.getBrand(), result.getBrand());

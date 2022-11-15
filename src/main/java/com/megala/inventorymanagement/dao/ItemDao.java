@@ -10,20 +10,39 @@ public class ItemDao {
     @Autowired
     ItemRepository itemRepository;
 
+    /***
+     * calls itemRepository to create an item
+     * @param item
+     * @return item object after creating an item
+     */
     public Item createItem(Item item){
         itemRepository.addItem(item);
         return itemRepository.findByItemId(item.getId());
     }
 
+    /***
+     * calls item Repository to get an item
+     * @param itemId
+     * @return item object for the given item id
+     */
+    public Item getItem(Integer itemId) {
+        return itemRepository.findByItemId(itemId);
+    }
+
+    /***
+     * calls itemRepository to update an item
+     * @param item
+     * @return item object after updating an item for the given item id
+     */
     public Item updateItem(Item item) {
         itemRepository.updateItem(item.getId(), item);
         return itemRepository.findByItemId(item.getId());
     }
 
-    public Item getItem(Integer itemId) {
-        return itemRepository.findByItemId(itemId);
-    }
-
+    /***
+     * calls itemRepository to delete an item
+     * @param itemId
+     */
     public void deleteItem(Integer itemId) {
         itemRepository.deleteItem(itemId);
     }
