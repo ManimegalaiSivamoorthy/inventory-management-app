@@ -1,6 +1,5 @@
 package com.megala.inventorymanagement.controller;
 
-import ch.qos.logback.core.joran.conditional.IfAction;
 import com.megala.inventorymanagement.exception.ResourceNotFound;
 import com.megala.inventorymanagement.model.Item;
 import com.megala.inventorymanagement.service.ItemService;
@@ -30,7 +29,7 @@ public class ItemController {
     @GetMapping(value = "/item/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Item> getItem(@PathVariable("id") Integer id) {
         Item item = itemService.getItem(id);
-        if(item != null) {
+        if (item != null) {
             return new ResponseEntity<>(item, HttpStatus.OK);
         } else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -48,7 +47,7 @@ public class ItemController {
         if (item == null) {
             throw new ResourceNotFound("Item is not available to delete.");
         }
-        logger.info("Deleting item with id "+ id + " having data " + item.toString());
+        logger.info("Deleting item with id "+ id + " having data " + item);
         itemService.removeItem(id);
     }
 }

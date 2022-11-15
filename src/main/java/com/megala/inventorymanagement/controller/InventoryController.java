@@ -30,7 +30,7 @@ public class InventoryController {
     @GetMapping(value = "/inventory/{item_id}")
     public ResponseEntity<Inventory> getInventory (@PathVariable("item_id") Integer itemId) {
         Inventory inventory = inventoryService.getInventory(itemId);
-        if(inventory != null) {
+        if (inventory != null) {
             return new ResponseEntity<>(inventory, HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

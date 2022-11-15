@@ -3,6 +3,7 @@ package com.megala.inventorymanagement.service;
 import com.megala.inventorymanagement.dao.InventoryDao;
 import com.megala.inventorymanagement.exception.ResourceNotFound;
 import com.megala.inventorymanagement.model.Inventory;
+import com.megala.inventorymanagement.model.Item;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,9 @@ public class InventoryService {
 
     @Autowired
     InventoryDao inventoryDao;
+
+    @Autowired
+    ItemService itemService;
 
     /***
      * get inventory method calls inventory Dao to get an inventory for the given item id
@@ -32,6 +36,10 @@ public class InventoryService {
      * @return Inventory after adding inventory for the given id
      */
     public Inventory addInventory(Integer itemId, Inventory inventory) {
+        Item item = itemService.getItem(itemId);
+        if (item == null) {
+            throw new ResourceNotFound("Item is not available so inventory cannot be added!");
+        }
         return inventoryDao.addInventory(itemId, inventory);
     }
 
@@ -112,6 +120,10 @@ public class InventoryService {
      * @param itemId itemId
      */
     public void removeInventory(Integer itemId) {
+        Inventory inventory = inventoryDao.getInventory(itemId);
+        if (inventory == null) {
+            throw new ResourceNotFound("Inventory is not available to delete!");
+        }
         inventoryDao.removeInventory(itemId);
     }
 }

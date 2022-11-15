@@ -1,6 +1,7 @@
 package com.megala.inventorymanagement.service;
 
 import com.megala.inventorymanagement.dao.ItemDao;
+import com.megala.inventorymanagement.exception.ResourceNotFound;
 import com.megala.inventorymanagement.model.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +37,10 @@ public class ItemService {
      * @return item object after the item is updated
      */
     public Item updateItem(Integer itemId, Item item) {
+        Item oldItem = itemDao.getItem(itemId);
+        if (oldItem == null) {
+            throw new ResourceNotFound("Item is not available to update!");
+        }
         item.setId(itemId);
         return itemDao.updateItem(item);
     }
@@ -45,6 +50,10 @@ public class ItemService {
      * @param itemId
      */
     public void removeItem(Integer itemId) {
+        Item item = itemDao.getItem(itemId);
+        if (item == null) {
+            throw new ResourceNotFound("Item to be deleted is not found!");
+        }
         itemDao.deleteItem(itemId);
     }
 }
