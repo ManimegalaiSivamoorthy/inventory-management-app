@@ -1,4 +1,4 @@
-package com.megala.auth.model;
+package com.megala.inventorymanagement.model;
 
 import java.util.List;
 
