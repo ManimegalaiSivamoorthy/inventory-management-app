@@ -1,7 +1,5 @@
 package com.megala.inventorymanagement.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 
@@ -15,7 +13,7 @@ public class Item {
     @NotNull
     String description;
     String brand;
-    @DecimalMin(value = "0.01", message = "Cost cannot be less then 1 cent")
+    @DecimalMin(value = "0.01", message = "Cost cannot be less than 1 cent")
     Double cost;
     Double size;
     String sizeUnit;
