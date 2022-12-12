@@ -19,6 +19,9 @@ public class Item {
     Double cost;
     Double size;
     String sizeUnit;
+    @Min(value = 1, message = "The item quantity should be atleast 1")
+    Integer packageQuantity;
+
     public Integer getId() {
         return id;
     }
@@ -26,9 +29,6 @@ public class Item {
     public void setId(Integer id) {
         this.id = id;
     }
-    @Min(value = 1, message = "The item quantity should be atleast 1")
-    Integer packageQuantity;
-
     public String getDescription() {
         return description;
     }
