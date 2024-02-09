@@ -55,17 +55,35 @@ class InventoryServiceTest {
 
         when(itemService.getItem(itemId)).thenReturn(item);
 
+        when(inventoryService.getInventory(itemId)).thenReturn(inventory);
+
         when(inventoryDao.addInventory(itemId, inventory)).thenReturn(inventory);
 
         Inventory resultInventory = inventoryService.addInventory(itemId, inventory);
 
         assertEquals(inventory, resultInventory);
 
-        verify(inventoryDao).addInventory(itemId, inventory);
-        verify(itemService).getItem(itemId);
+        verify(inventoryDao, times(1)).addInventory(itemId, inventory);
+        verify(itemService, times(1)).getItem(itemId);
+        verify(inventoryService, times(1)).getInventory(itemId);
     }
 
     @Test
+    void addInventoryMethodMustThrowExceptionIfItemDoesNotExist() {
+        Integer itemId = 3;
+        Inventory inventory = createTestInventory();
+        inventory.setItemId(3);
+
+        when(itemService.getItem(itemId)).thenReturn(null);
+
+        assertThrows(ResourceNotFound.class, () -> inventoryService.addInventory(itemId, inventory));
+        verify(inventoryDao, never()).getInventory(itemId);
+        verify(inventoryDao, never()).addInventory(itemId, inventory);
+    }
+
+
+
+        @Test
     void addInventoryMethodThrowsExceptionWhenItemIsNotAvailable() {
         Integer itemId = 3;
         Inventory inventory = createTestInventory();

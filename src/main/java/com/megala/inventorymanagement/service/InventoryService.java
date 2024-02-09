@@ -1,6 +1,7 @@
 package com.megala.inventorymanagement.service;
 
 import com.megala.inventorymanagement.dao.InventoryDao;
+import com.megala.inventorymanagement.exception.InventoryAlreadyExist;
 import com.megala.inventorymanagement.exception.ResourceNotFound;
 import com.megala.inventorymanagement.model.Inventory;
 import com.megala.inventorymanagement.model.Item;
@@ -36,11 +37,19 @@ public class InventoryService {
      * @return Inventory after adding inventory for the given id
      */
     public Inventory addInventory(Integer itemId, Inventory inventory) {
+        throwExceptionIfBadRequest(itemId);
+        return inventoryDao.addInventory(itemId, inventory);
+    }
+
+    private void throwExceptionIfBadRequest(Integer itemId) {
         Item item = itemService.getItem(itemId);
         if (item == null) {
             throw new ResourceNotFound("Item is not available so inventory cannot be added!");
         }
-        return inventoryDao.addInventory(itemId, inventory);
+        Inventory existingInventory = inventoryDao.getInventory(itemId);
+        if (existingInventory != null) {
+            throw new InventoryAlreadyExist("Inventory already exists. So cannot create. Please try updating the inventory");
+        }
     }
 
     /**
