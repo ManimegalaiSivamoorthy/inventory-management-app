@@ -16,8 +16,8 @@ public interface ItemRepository {
             " where item_id = #{itemId}")
     Item findByItemId(Integer itemId);
 
-    @Insert("INSERT into item (description, brand, cost, size, size_unit, package_quantity)" +
-            "values (#{description}, #{brand}, #{cost}, #{size}, #{sizeUnit}, #{packageQuantity})"
+    @Insert("INSERT into item (item_id, description, brand, cost, size, size_unit, package_quantity)" +
+            "values (#{id}, #{description}, #{brand}, #{cost}, #{size}, #{sizeUnit}, #{packageQuantity})"
     )
     void addItem(Item item);
 

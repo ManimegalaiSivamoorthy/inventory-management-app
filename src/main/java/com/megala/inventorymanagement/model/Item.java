@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class Item {
+    @NotNull
     Integer id;
     @NotNull
     String description;
