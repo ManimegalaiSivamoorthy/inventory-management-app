@@ -22,12 +22,12 @@ public interface ItemRepository {
     void addItem(Item item);
 
     @Update("UPDATE item " +
-            "   set description = #{description}, " +
-            "   brand = #{brand}, " +
-            "   cost = #{cost}, " +
-            "   size = #{size}, " +
-            "   size_unit = #{sizeUnit}, " +
-            "   package_quantity = #{packageQuantity} " +
+            "   set description = #{item.description}, " +
+            "   brand = #{item.brand}, " +
+            "   cost = #{item.cost}, " +
+            "   size = #{item.size}, " +
+            "   size_unit = #{item.sizeUnit}, " +
+            "   package_quantity = #{item.packageQuantity} " +
             " where item_id = #{itemId}")
     void updateItem(Integer itemId, Item item);
 

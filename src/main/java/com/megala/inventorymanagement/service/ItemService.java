@@ -1,6 +1,4 @@
 package com.megala.inventorymanagement.service;
-
-import com.megala.inventorymanagement.controller.ItemController;
 import com.megala.inventorymanagement.dao.ItemDao;
 import com.megala.inventorymanagement.exception.ItemAlreadyExist;
 import com.megala.inventorymanagement.exception.ResourceNotFound;
@@ -54,7 +52,6 @@ public class ItemService {
         if (oldItem == null) {
             throw new ResourceNotFound("Item is not available to update!");
         }
-        item.setId(itemId);
         return itemDao.updateItem(item);
     }
 
