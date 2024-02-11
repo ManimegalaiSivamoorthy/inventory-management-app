@@ -6,7 +6,9 @@ Spring boot as Web Framework
 Java as Programming Language  
 Junit for unit testing  
 Mockito for mocking   
-Gradle for dependency management  
+PostGresSQL as Database  
+Gradle for dependency management
+ 
 
 **Endpoints Exposed**  
 **To create an item**   
