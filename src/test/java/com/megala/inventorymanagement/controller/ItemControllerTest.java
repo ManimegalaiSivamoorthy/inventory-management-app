@@ -29,42 +29,37 @@ class ItemControllerTest {
     @Test
     void createItemMethodMustCreateItemAndReturnTheCreatedItem() {
         Item item = createTestItem();
-        item.setId(null);
 
-        Item itemMockedResponse = createTestItem();
-        itemMockedResponse.setId(5);
-
-        when(itemService.createItem(item)).thenReturn(itemMockedResponse);
+        when(itemService.createItem(item)).thenReturn(item);
 
         Item result = itemController.createItem(item);
 
         assertNotNull(result.getId());
-        assertEquals(5, result.getId());
+        assertEquals(1, result.getId());
         assertEquals(item.getBrand(), result.getBrand());
         assertEquals(item.getSize(), result.getSize());
 
-        verify(itemService).createItem(item);
+        verify(itemService, times(1)).createItem(item);
     }
 
     @Test
     void getItemMethodMustGetITemAndReturnITemAndHttpStatusOK() {
         Item item = createTestItem();
-        item.setId(5);
 
-        when(itemService.getItem(5)).thenReturn(item);
+        when(itemService.getItem(1)).thenReturn(item);
 
-        ResponseEntity<Item> response = itemController.getItem(5);
-        verify(itemService).getItem(5);
+        ResponseEntity<Item> response = itemController.getItem(1);
+        verify(itemService, times(1)).getItem(1);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(item, response.getBody());
     }
     @Test
     void getItemMethodMustReturnHttpStatusNotFoundWhenItemIsNotFound() {
-        when(itemService.getItem(5)).thenReturn(null);
+        when(itemService.getItem(1)).thenReturn(null);
 
-        ResponseEntity<Item> response = itemController.getItem(5);
-        verify(itemService).getItem(5);
+        ResponseEntity<Item> response = itemController.getItem(1);
+        verify(itemService, times(1)).getItem(1);
 
         assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
         assertNull(response.getBody());
@@ -81,18 +76,17 @@ class ItemControllerTest {
 
         Item result = itemController.putItem(item.getId(), item);
 
-        verify(itemService).updateItem(item.getId(), item);
+        verify(itemService, times(1)).updateItem(item.getId(), item);
         assertEquals(result, updatedItemMockedResponse);
     }
 
     @Test
     void deleteItemMethodShouldDeleteItem() {
         Item item = createTestItem();
-        item.setId(6);
 
-        when(itemService.getItem(6)).thenReturn(item);
+        when(itemService.getItem(1)).thenReturn(item);
 
-        itemController.deleteItem(6);
-        verify(itemService).removeItem(6);
+        itemController.deleteItem(1);
+        verify(itemService, times(1)).removeItem(1);
     }
 }

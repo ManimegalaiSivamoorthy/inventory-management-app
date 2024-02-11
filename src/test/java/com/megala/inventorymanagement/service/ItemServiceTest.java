@@ -1,6 +1,7 @@
 package com.megala.inventorymanagement.service;
 
 import com.megala.inventorymanagement.dao.ItemDao;
+import com.megala.inventorymanagement.exception.ItemAlreadyExist;
 import com.megala.inventorymanagement.exception.ResourceNotFound;
 import com.megala.inventorymanagement.model.Item;
 import org.junit.jupiter.api.AfterEach;
@@ -26,32 +27,46 @@ class ItemServiceTest {
     }
 
     @Test
-    void createItem() {
+    void createItemMethodMustInsertAnItem() {
+        //Given:
         Item item = createTestItem();
         Item createdItem = createTestItem();
 
+        when(itemDao.getItem(item.getId())).thenReturn(null);
         when(itemDao.createItem(item)).thenReturn(createdItem);
 
+        //when:
         Item resultItem = itemService.createItem(item);
 
+        //Then:
         assertEquals(createdItem, resultItem);
-
-        verify(itemDao).createItem(item);
+        verify(itemDao, times(1)).createItem(item);
+        verify(itemDao, times(1)).getItem(item.getId());
     }
 
     @Test
-    void getItem() {
-        Integer itemId = 2;
+    void createITemMustThrowExceptionIfItemAlreadyExists() {
         Item item = createTestItem();
-        item.setId(2);
 
-        when(itemDao.getItem(itemId)).thenReturn(item);
+        when(itemDao.getItem(item.getId())). thenReturn(item);
 
-        Item resultItem = itemService.getItem(itemId);
+        assertThrows(ItemAlreadyExist.class, () ->itemService.createItem(item));
+
+        verify(itemDao, times(1)).getItem(item.getId());
+        verify(itemDao, times(0)).createItem(item);
+    }
+
+    @Test
+    void getItemMethodMustGiveItemForTheGivenItemId() {
+        Item item = createTestItem();
+
+        when(itemDao.getItem(item.getId())).thenReturn(item);
+
+        Item resultItem = itemService.getItem(item.getId());
 
         assertEquals(item, resultItem);
 
-        verify(itemDao).getItem(itemId);
+        verify(itemDao).getItem(item.getId());
     }
 
     @Test
@@ -110,5 +125,4 @@ class ItemServiceTest {
 
         verify(itemDao).getItem(itemId);
     }
-
 }

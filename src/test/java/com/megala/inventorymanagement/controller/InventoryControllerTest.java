@@ -37,7 +37,7 @@ class InventoryControllerTest {
 
         assertEquals(mockedAddInventory, resultInventory);
 
-        verify(inventoryService).addInventory(itemId, inventory);
+        verify(inventoryService, times(1)).addInventory(itemId, inventory);
 
     }
 

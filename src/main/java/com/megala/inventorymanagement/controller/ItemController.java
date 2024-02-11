@@ -43,11 +43,6 @@ public class ItemController {
 
     @DeleteMapping(value = "/item/{id}")
     public void deleteItem(@PathVariable("id") Integer id) {
-        Item item = itemService.getItem(id);
-        if (item == null) {
-            throw new ResourceNotFound("Item is not available to delete.");
-        }
-        logger.info("Deleting item with id "+ id + " having data " + item);
         itemService.removeItem(id);
     }
 }
